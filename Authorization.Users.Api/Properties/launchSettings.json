@@ -1,0 +1,14 @@
+﻿{
+  "profiles": {
+    "Authorization.Users.Api": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "site/index",
+      "applicationUrl": "https://localhost:8152;http://localhost:6023",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
