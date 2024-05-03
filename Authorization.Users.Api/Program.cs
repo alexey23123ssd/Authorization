@@ -12,10 +12,9 @@ namespace Authorization.Users.Api
 
             var app = builder.Build();
 
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();

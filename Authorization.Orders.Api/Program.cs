@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Authorization.Orders.Api
 {
@@ -11,8 +12,15 @@ namespace Authorization.Orders.Api
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config =>
                 {
+
+                    config.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ClockSkew = TimeSpan.FromSeconds(5),
+                        ValidateAudience = false
+                    };
+
                     config.Authority = "https://localhost:10001";
-                    config.Audience = "OrdersAPI";
+                    config.Audience = "https://localhost:10001";
                 });
 
             builder.Services.AddControllersWithViews();
@@ -34,8 +42,11 @@ namespace Authorization.Orders.Api
 
             app.UseAuthorization();
 
-            app.MapDefaultControllerRoute();
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+            
             app.Run();
         }
     }

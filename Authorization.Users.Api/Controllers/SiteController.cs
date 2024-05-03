@@ -1,6 +1,5 @@
 ﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
 
 namespace Authorization.Users.Api.Controllers
 {
@@ -28,13 +27,12 @@ namespace Authorization.Users.Api.Controllers
             var authClient = _httpClientFactory.CreateClient();
             var discoveryDocument = await authClient.GetDiscoveryDocumentAsync("https://localhost:10001");
 
-            var tokenResponse = await authClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
+            var tokenResponse = await authClient.RequestClientCredentialsTokenAsync(
+                new ClientCredentialsTokenRequest
             {
                 Address = discoveryDocument.TokenEndpoint,
-
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
-
                 Scope = "OrdersAPI"
             });
 
@@ -43,7 +41,7 @@ namespace Authorization.Users.Api.Controllers
 
             ordersClient.SetBearerToken(tokenResponse.AccessToken);
 
-            var responce = await ordersClient.GetAsync("https://localhost:7151/site/secret");
+            var responce = await ordersClient.GetAsync("https://localhost:5001/site/secret");
             
             if(!responce.IsSuccessStatusCode)
             {

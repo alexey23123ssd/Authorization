@@ -9,9 +9,12 @@ namespace Authorization.IndentityServer
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddIdentityServer()
-                .AddInMemoryClients(Configuration.GetClients())
-                .AddInMemoryApiResources(Configuration.GetApiResources())
-                .AddInMemoryIdentityResources(Configuration.GetIdentityResources()) ;
+                .AddInMemoryClients(IdentityServerConfiguration.GetClients())
+                .AddInMemoryApiResources(IdentityServerConfiguration.GetApiResources())
+                .AddInMemoryIdentityResources(IdentityServerConfiguration.GetIdentityResources())
+                .AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
+                .AddDeveloperSigningCredential();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
